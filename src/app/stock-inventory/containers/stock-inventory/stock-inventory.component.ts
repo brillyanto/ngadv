@@ -8,13 +8,10 @@ import { StockStoreComponent } from '../../components/stock-store/stock-store.co
     template: `
     <div class="stock-inventory">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <stock-store [parent]="form"></stock-store>
+            <stock-selector [parent]="form"></stock-selector>
+            <stock-products [parent]="form"></stock-products>
 
-            <stock-store></stock-store>
-
-            <div formGroupName="store">
-                <input type="text" formControlName="branch">
-                <input type="text" formControlName="code">
-            </div>
             <div class="stock-inventory__buttons">
                 <input type="submit" >
             </div>
@@ -29,7 +26,12 @@ export class StockInventoryComponent {
         store : new FormGroup({
             branch : new FormControl('MX905'),
             code: new FormControl('1679')
-        })
+        }),
+        selector: new FormGroup({
+            product_id: new FormControl('23'),
+            quantity: new FormControl('d')
+        }),
+        stocks: new FormArray([])
     })
 
     onSubmit(){

@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
     styleUrls: ['./stock-selector.component.scss'],
     template: `
     <div [formGroup]="parent">
-        
+        <div formGroupName="selector"></div>
     </div>
     `
 })
