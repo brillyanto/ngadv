@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {  FormControl, FormGroup, FormArray } from '@angular/forms';
+import { StockStoreComponent } from '../../components/stock-store/stock-store.component';
 
 @Component({
     selector:'stock-inventory',
@@ -7,6 +8,9 @@ import {  FormControl, FormGroup, FormArray } from '@angular/forms';
     template: `
     <div class="stock-inventory">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <stock-store></stock-store>
+
             <div formGroupName="store">
                 <input type="text" formControlName="branch">
                 <input type="text" formControlName="code">
