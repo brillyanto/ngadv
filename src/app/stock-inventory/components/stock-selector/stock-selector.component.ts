@@ -9,7 +9,7 @@ import { Product } from 'src/app/stock-inventory/models/product.interface';
     <div [formGroup]="parent">
         <div formGroupName="selector">
             <select formControlName="product_id">
-                <option value=""></option>
+                <option value="">Select stock</option>
                 <option *ngFor="let product of products" 
                 [value]="product.id">{{product.name}}</option>
             </select>

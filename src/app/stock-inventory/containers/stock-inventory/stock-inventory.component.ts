@@ -47,12 +47,19 @@ export class StockInventoryComponent {
             branch : new FormControl('MX905'),
             code: new FormControl('1679')
         }),
-        selector: new FormGroup({
-            product_id: new FormControl('23'),
-            quantity: new FormControl('10')
-        }),
-        stocks: new FormArray([])
+        selector: this.createStock({ product_id:1, quantity:10 }),
+        stocks: new FormArray([
+            this.createStock({ product_id:1, quantity:10 }),
+            this.createStock({ product_id:3, quantity:50 })
+        ])
     })
+
+    createStock(stock){
+        return new FormGroup({
+            product_id: new FormControl( parseInt(stock.product_id, 10)  || ''),
+            quantity: new FormControl(stock.quantity || 10)
+        });
+    }
 
     onSubmit(){
         console.log('Submitted:',this.form.value)
