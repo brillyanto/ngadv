@@ -11,7 +11,7 @@ import { Product } from '../../models/product.interface';
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <stock-store [parent]="form"></stock-store>
             <stock-selector [parent]="form" [products]="products" (added)="addStock($event)"></stock-selector>
-            <stock-products [parent]="form"></stock-products>
+            <stock-products [parent]="form" (removed)="removeStock($event)"></stock-products>
 
             <div class="stock-inventory__buttons">
                 <input type="submit" >
@@ -23,7 +23,7 @@ import { Product } from '../../models/product.interface';
 })
 
 export class StockInventoryComponent { 
-    
+
     products: Product[] = [
         {
             id: 1,
@@ -65,6 +65,11 @@ export class StockInventoryComponent {
         const controls = this.form.get('stocks') as FormArray;
         controls.push( this.createStock(stock) );
         
+    }
+
+    removeStock({stock, index}: {stock:FormGroup, index:number}){
+        const controls = this.form.get('stocks') as FormArray;
+        controls.removeAt(index);
     }
 
     onSubmit(){
