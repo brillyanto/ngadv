@@ -7,7 +7,11 @@ import { FormGroup } from '@angular/forms';
     styleUrls: ['./stock-products.component.scss'],
     template: `
     <div [formGroup]="parent">
-    <div formGroupName="stocks"></div>
+        <div formArrayName="stocks">
+            <div *ngFor="let stock of stocks; let i = index;" formGroupName="i">
+                
+            </div>
+        </div>
     </div>
     `
 })
