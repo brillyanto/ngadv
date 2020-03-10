@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { StockStoreComponent } from '../../components/stock-store/stock-store.component';
 import { Product } from '../../models/product.interface';
 
@@ -42,10 +42,12 @@ export class StockInventoryComponent {
         }
     ];
 
-    form = new FormGroup({
-        store : new FormGroup({
-            branch : new FormControl('MX905'),
-            code: new FormControl('1679')
+    constructor(private fb: FormBuilder){}
+
+    form = this.fb.group({
+        store : this.fb.group({
+            branch : 'MX905',
+            code: '1679'
         }),
         selector: this.createStock({ product_id:1, quantity:10 }),
         stocks: new FormArray([
@@ -55,16 +57,15 @@ export class StockInventoryComponent {
     })
 
     createStock(stock){
-        return new FormGroup({
-            product_id: new FormControl( parseInt(stock.product_id, 10)  || ''),
-            quantity: new FormControl(stock.quantity || 10)
+        return this.fb.group({
+            product_id:  parseInt(stock.product_id, 10)  || '',
+            quantity: stock.quantity || 10
         });
     }
 
     addStock(stock){
         const controls = this.form.get('stocks') as FormArray;
         controls.push( this.createStock(stock) );
-        
     }
 
     removeStock({stock, index}: {stock:FormGroup, index:number}){
@@ -73,6 +74,6 @@ export class StockInventoryComponent {
     }
 
     onSubmit(){
-        console.log('Submitted:',this.form.value)
+        console.log('Submitted:',this.form.value);
     }
 }
