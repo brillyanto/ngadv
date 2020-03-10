@@ -10,7 +10,7 @@ import { Product } from '../../models/product.interface';
     <div class="stock-inventory">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <stock-store [parent]="form"></stock-store>
-            <stock-selector [parent]="form" [products]="products"></stock-selector>
+            <stock-selector [parent]="form" [products]="products" (added)="addStock($event)"></stock-selector>
             <stock-products [parent]="form"></stock-products>
 
             <div class="stock-inventory__buttons">
@@ -59,6 +59,12 @@ export class StockInventoryComponent {
             product_id: new FormControl( parseInt(stock.product_id, 10)  || ''),
             quantity: new FormControl(stock.quantity || 10)
         });
+    }
+
+    addStock(stock){
+        const controls = this.form.get('stocks') as FormArray;
+        controls.push( this.createStock(stock) );
+        
     }
 
     onSubmit(){
