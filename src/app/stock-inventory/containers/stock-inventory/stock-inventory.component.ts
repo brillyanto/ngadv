@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { StockStoreComponent } from '../../components/stock-store/stock-store.component';
 import { Product } from '../../models/product.interface';
 
 @Component({
@@ -12,7 +11,6 @@ import { Product } from '../../models/product.interface';
             <stock-store [parent]="form"></stock-store>
             <stock-selector [parent]="form" [products]="products" (added)="addStock($event)"></stock-selector>
             <stock-products [parent]="form" (removed)="removeStock($event)"></stock-products>
-
             <div class="stock-inventory__buttons">
                 <input type="submit" >
             </div>

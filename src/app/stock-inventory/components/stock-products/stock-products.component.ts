@@ -16,8 +16,7 @@ import { FormGroup, FormArray } from '@angular/forms';
                 </div>
             </div>
         </div>
-    </div>
-    `
+    </div>`
 })
 
 export class StockProductsComponent{
@@ -34,4 +33,6 @@ export class StockProductsComponent{
  get stocks(){
     return (this.parent.get('stocks') as FormArray).controls;
  }
+
 }
+
