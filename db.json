@@ -1,0 +1,24 @@
+{
+  "products" : [
+    {
+        "id": 1,
+        "name": "Apple IPod",
+        "price": 100
+    },
+    {
+        "id": 2,
+        "name": "Apple IPhone",
+        "price": 1000
+    },
+    {
+        "id": 3,
+        "name": "Apple Macbook Pro",
+        "price": 3000
+    }
+  ],
+  "stocks":[
+    { "product_id":1, "quantity":10 },
+    { "product_id":3, "quantity":50 }
+  ]
+
+}

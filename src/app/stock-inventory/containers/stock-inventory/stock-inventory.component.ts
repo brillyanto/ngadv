@@ -16,31 +16,15 @@ import { Product } from '../../models/product.interface';
             <div class="stock-inventory__buttons">
                 <input type="submit" >
             </div>
-            <pre>{{form.value | json }}</pre>    
+            <pre>{{form.value | json }}</pre>
         </form>
     </div>
     `
 })
 
-export class StockInventoryComponent { 
+export class StockInventoryComponent {
 
-    products: Product[] = [
-        {
-            id: 1,
-            name: "Apple IPod",
-            price: 100
-        },
-        {
-            id: 2,
-            name: "Apple IPhone",
-            price: 1000
-        },
-        {
-            id: 3,
-            name: "Apple Macbook Pro",
-            price: 3000
-        }
-    ];
+    products: Product[];
 
     constructor(private fb: FormBuilder){}
 
@@ -50,20 +34,17 @@ export class StockInventoryComponent {
             code: '1679'
         }),
         selector: this.createStock({ product_id:1, quantity:10 }),
-        stocks: new FormArray([
-            this.createStock({ product_id:1, quantity:10 }),
-            this.createStock({ product_id:3, quantity:50 })
-        ])
+        stocks: new FormArray([])
     })
 
-    createStock(stock){
+    createStock(stock:any){
         return this.fb.group({
             product_id:  parseInt(stock.product_id, 10)  || '',
             quantity: stock.quantity || 10
         });
     }
 
-    addStock(stock){
+    addStock(stock:any){
         const controls = this.form.get('stocks') as FormArray;
         controls.push( this.createStock(stock) );
     }
