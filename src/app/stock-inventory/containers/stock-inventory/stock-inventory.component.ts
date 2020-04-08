@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { Product } from '../../models/product.interface';
+import { Product, Item } from '../../models/product.interface';
+import { Observable, forkJoin } from 'rxjs';
+import { StockInventoryService } from '../../services/stock-inventory.service';
+
 
 @Component({
     selector:'stock-inventory',
@@ -10,7 +13,7 @@ import { Product } from '../../models/product.interface';
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <stock-store [parent]="form"></stock-store>
             <stock-selector [parent]="form" [products]="products" (added)="addStock($event)"></stock-selector>
-            <stock-products [parent]="form" (removed)="removeStock($event)"></stock-products>
+            <stock-products [parent]="form" [map]="productMap" (removed)="removeStock($event)"></stock-products>
             <div class="stock-inventory__buttons">
                 <input type="submit" >
             </div>
@@ -20,11 +23,36 @@ import { Product } from '../../models/product.interface';
     `
 })
 
-export class StockInventoryComponent {
+export class StockInventoryComponent implements OnInit {
 
     products: Product[];
+    items: Item[];
 
-    constructor(private fb: FormBuilder){}
+    productMap: Map<number, Product>;
+
+    constructor(private fb: FormBuilder, private stockService: StockInventoryService){}
+
+    ngOnInit(){
+      const cart = this.stockService.getCartItems();
+      const products = this.stockService.getProducts();
+
+      forkJoin(
+        cart, products
+      )
+      .subscribe(
+        ([cart, products]: [Item[], Product[]]) => {
+          const myMap = products.map<[number,Product]>( product => [product.id, product] )
+          // console.log(myMap);
+          this.productMap = new Map<number, Product>(myMap);
+          console.log(this.productMap);
+          this.products = products;
+
+          cart.forEach(item => {
+            this.addStock(item);
+          });
+        }
+      );
+    }
 
     form = this.fb.group({
         store : this.fb.group({

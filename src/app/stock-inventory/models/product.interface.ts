@@ -3,3 +3,8 @@ export interface Product{
     name: string,
     price: number
 }
+
+export interface Item{
+   product_id: number,
+   quantity: number
+}
